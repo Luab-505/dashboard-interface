@@ -21,10 +21,18 @@ jobs:
       with:
         python-version: '3.9'
 
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-        pip install pytest  # Adiciona pytest diretamente aqui
+        pip install pytest  # Força a instalação do pytest
 
     - name: Run tests
       run: |
