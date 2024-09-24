@@ -1,4 +1,4 @@
-name: Python Test Workflow
+name: CI Workflow
 
 on:
   push:
@@ -21,19 +21,23 @@ jobs:
       with:
         python-version: '3.9'
 
-    - name: Cache dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
-
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-        pip install pytest  # Força a instalação do pytest
+        pip install pytest pytest-cov flake8 black bandit
 
     - name: Run tests
       run: |
-        pytest
+        pytest --cov=.
+
+    - name: Lint with flake8
+      run: |
+        flake8 .
+
+    - name: Format with black
+      run: |
+        black --check .
+
+    - name: Security check with bandit
+      run: |
+        bandit -r .
