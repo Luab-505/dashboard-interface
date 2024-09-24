@@ -3,10 +3,10 @@ name: Python Test Workflow
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   test:
@@ -14,10 +14,10 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3  # Atualizado para v3
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v4  # Atualizado para v4
       with:
         python-version: '3.9'
 
